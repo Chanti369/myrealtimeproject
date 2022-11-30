@@ -1,10 +1,20 @@
 pipeline{
     agent any
+    tools{
+        maven "MAVEN"
+    }
     stages{
         stage('Git Checkout'){
             steps{
                 script{
                     git branch: 'main', url: 'https://github.com/Chanti369/myrealtimeproject.git'
+                }
+            }
+        }
+        stage('mvn clean install'){
+            steps{
+                script{
+                    sh 'mvn clean install'
                 }
             }
         }
