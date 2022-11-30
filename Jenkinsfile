@@ -68,8 +68,20 @@ pipeline{
                 }
             }
         }
+        stage('indentifying misconfigs using datree'){
+            steps{
+                script{
+                    dir('kubernetes/myapp/'){
+                        withEnv(['DATREE_TOKEN=22ecd219-bce0-4cb8-8a9a-efab1589ab1d']) {
+                              sh 'helm datree test .'
+                        }
+                    }    
 
-    }
+                }
+            }
+
+        }
+    }    
     post {
 		always {
 			mail bcc: '', body: "<br>Project: ${env.JOB_NAME} <br>Build Number: ${env.BUILD_NUMBER} <br> URL de build: ${env.BUILD_URL}", cc: '', charset: 'UTF-8', from: '', mimeType: 'text/html', replyTo: '', subject: "${currentBuild.result} CI: Project name -> ${env.JOB_NAME}", to: "adityakumarreddyvennapusa@gmail.com";  
