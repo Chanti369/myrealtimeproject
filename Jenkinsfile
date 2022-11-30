@@ -86,9 +86,11 @@ pipeline{
                 script{
                    withCredentials([usernamePassword(credentialsId: 'nexus1', passwordVariable: 'usernamepasswd', usernameVariable: 'nexususername')]){
                      dir('kubernetes/myapp/'){
-                         sh 'helmversion=$(helm show chart myapp | grep version | cut -d ":" -f 2 | tr -d " ")'
-                         sh 'tar -cvf myapp-${helmversion}.tgz myapp/'
-                         sh 'curl -u $nexususername:$usernamepasswd http://13.126.96.40:8081/repository/helmrepo/ --upload-file myapp-${helmversion}.tgz -v'
+                        sh ***
+                        helmversion=$(helm show chart myapp | grep version | cut -d ":" -f 2 | tr -d " ")
+                        tar -czvf myapp-${helmversion}.tgz myapp/
+                        curl -u $nexususername:$usernamepasswd http://13.126.96.40:8081/repository/helmrepo/ --upload-file myapp-${helmversion}.tgz -v
+                        ***
                      }
                    }      
                 }    
