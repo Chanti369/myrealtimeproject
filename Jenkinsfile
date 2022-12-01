@@ -50,6 +50,18 @@ pipeline{
                 }
             }
         }
+        stage('docker push'){
+            steps{
+                script{
+                    withCredentials([usernamePassword(credentialsId: 'docker1', passwordVariable: 'dockerpassword', usernameVariable: 'dockerusername1')]){
+                        sh 'docker login -u $dockerusername1 -p $dockerpassword'
+                        sh 'docker push $dockerusername1/$JOB_NAME:v1.$BUILD_ID'
+                        sh 'docker push $dockerusername1/$JOB_NAME:latest'
+                    }
+
+                }
+            }
+        }
     }
     post {
 		always {
