@@ -34,7 +34,7 @@ pipeline{
                     def readpom = readMavenPom file: 'pom.xml'
                     def readversion = readpom.version
                     def readrepo = readversion.endsWith("SNAPSHOT") ? "project1-snapshot" : "project1-release"
-                    nexusArtifactUploader artifacts: [[artifactId: 'devops-integration', classifier: '', file: 'target/devops-integration.jar', type: 'jar']], credentialsId: 'nexus', groupId: 'com.javatechie', nexusUrl: '3.110.167.59:8081', nexusVersion: 'nexus3', protocol: 'http', repository: readrepo, version: readversion
+                    nexusArtifactUploader artifacts: [[artifactId: 'devops-integration', classifier: '', file: 'target/devops-integration.jar', type: 'jar']], credentialsId: 'nexus', groupId: 'com.javatechie', nexusUrl: '65.0.177.197:8081', nexusVersion: 'nexus3', protocol: 'http', repository: readrepo, version: readversion
                 }
             }
         }
@@ -81,7 +81,7 @@ pipeline{
                             sh '''
                             helmversion=$(helm show chart myapp | grep version | cut -d ":" -f 2 | tr -d " ")
                             tar -czvf myapp-${helmversion}.tgz myapp/
-                            curl -u $nexusuname:$nexuspasswd http://3.110.167.59:8081/repository/helm-repo/ --upload-file myapp-${helmversion}.tgz -v
+                            curl -u $nexusuname:$nexuspasswd http://65.0.177.197:8081/repository/helm-repo/ --upload-file myapp-${helmversion}.tgz -v
                             '''
                         }
                     }
