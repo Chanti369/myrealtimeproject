@@ -44,8 +44,8 @@ pipeline{
                     withCredentials([usernamePassword(credentialsId: 'docker1', passwordVariable: 'dockerpassword', usernameVariable: 'dockerusername1')]) {
                         sh 'docker login -u $dockerusername1 -p $dockerpassword'
                         sh 'docker build -t $JOB_NAME:v1.$BUILD_ID .'
-                        sh 'docker tag $JOB_NAME:v1.$BUILD_ID $dockerusername/$JOB_NAME:v1.$BUILD_ID'
-                        sh 'docker tag $JOB_NAME:v1.$BUILD_ID $dockerusername/$JOB_NAME:latest'
+                        sh 'docker tag $JOB_NAME:v1.$BUILD_ID $dockerusername1/$JOB_NAME:v1.$BUILD_ID'
+                        sh 'docker tag $JOB_NAME:v1.$BUILD_ID $dockerusername1/$JOB_NAME:latest'
                     }
                 }
             }
