@@ -79,8 +79,8 @@ pipeline{
                     dir('kubernetes/'){
                         withCredentials([usernamePassword(credentialsId: 'nexushelm', passwordVariable: 'nexuspasswd', usernameVariable: 'nexusuname')]) {
                             sh 'helmversion=$(helm show chart myapp | grep version | cut -d ":" -f 2 | tr -d " ")'
-                            sh 'tar -czvf myapp-$helmversion.tgz myapp/'
-                            sh 'curl -u $nexusuname:$nexuspasswd http://43.204.220.242:8081/repository/helm-repo/ --upload-file myapp-$helmversion.tgz -v'
+                            sh 'tar -czvf myapp-${helmversion}.tgz myapp/'
+                            sh 'curl -u $nexusuname:$nexuspasswd http://43.204.220.242:8081/repository/helm-repo/ --upload-file myapp-${helmversion}.tgz -v'
                         }
                     }
                 }
