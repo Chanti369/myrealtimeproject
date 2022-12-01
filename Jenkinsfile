@@ -78,7 +78,7 @@ pipeline{
                 script{
                     dir('kubernetes/'){
                         withCredentials([usernamePassword(credentialsId: 'nexushelm', passwordVariable: 'nexuspasswd', usernameVariable: 'nexusuname')]) {
-                            def filename = "Chart.yaml"
+                            def filename = "myapp/Chart.yaml"
                             def data = readYaml file: filename
                             def readchartversion = data.version
                             sh 'helmversion=$(helm show chart myapp | grep version | cut -d ":" -f 2 | tr -d " ")'
