@@ -41,8 +41,8 @@ pipeline{
         stage('docker build image'){
             steps{
                 script{
-                    withCredentials([usernamePassword(credentialsId: 'gmail', passwordVariable: 'dockerpasswd', usernameVariable: 'dockerusername')]) {
-                        sh 'docker login -u $dockerusername -p $dockerpasswd'
+                    withCredentials([usernamePassword(credentialsId: 'docker1', passwordVariable: 'dockerpassword', usernameVariable: 'dockerusername1')]) {
+                        sh 'docker login -u $dockerusername1 -p $dockerpassword'
                         sh 'docker build -t $JOB_NAME:v1.$BUILD_ID .'
                         sh 'docker tag $JOB_NAME:v1.$BUILD_ID $dockerusername/$JOB_NAME:v1.$BUILD_ID'
                         sh 'docker tag $JOB_NAME:v1.$BUILD_ID $dockerusername/$JOB_NAME:latest'
