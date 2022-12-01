@@ -38,6 +38,18 @@ pipeline{
                 }
             }
         }
+        stage('docker build image'){
+            steps{
+                script{
+                    withCredentials([usernamePassword(credentialsId: 'gmail', passwordVariable: 'dockerpasswd', usernameVariable: 'dockerusername')]) {
+                        sh 'docker login -u $dockerusername -p $dockerpasswd'
+                        sh 'docker build -t $JOB_NAME:v1.$BUILD_ID .'
+                        sh 'docker tag $JOB_NAME:v1.$BUILD_ID $dockerusername/$JOB_NAME:v1.$BUILD_ID'
+                        sh 'docker tag $JOB_NAME:v1.$BUILD_ID $dockerusername/$JOB_NAME:latest'
+                    }
+                }
+            }
+        }
     }
     post {
 		always {
