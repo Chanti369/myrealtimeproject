@@ -5,7 +5,7 @@ pipeline{
     }
     agent{
         node{
-            label '${params.kopscluster}'
+            label '$params.kopscluster'
         }
     }
     stages{
