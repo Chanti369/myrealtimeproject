@@ -9,6 +9,13 @@ pipeline{
         }
     }
     stages{
+        stage('git checkout'){
+            steps{
+                script{
+                    git branch: 'main', url: 'https://github.com/Chanti369/myrealtimeproject.git'
+                }
+            }
+        }
         stage('kops cluster'){
             when { expression {params.action == 'create'}}
             steps{
