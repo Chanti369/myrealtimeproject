@@ -5,7 +5,7 @@ pipeline{
     }
     agent{
         node{
-            label 'devcluster'
+            label "${kopscluster}"
         }
     }
     stages{
