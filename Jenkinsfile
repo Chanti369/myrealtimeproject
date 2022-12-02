@@ -23,7 +23,7 @@ pipeline{
             when { expression {params.action == 'create'}}
             steps{
                 script{
-                    sh 'helm repo update '${params.updaterepo}''
+                    sh 'helm repo update bitnami'
                     sh 'helm install release bitnami/jenkins'
                 }
             }
