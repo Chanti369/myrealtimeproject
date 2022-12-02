@@ -23,8 +23,8 @@ pipeline{
             when { expression {params.action == 'create'}}
             steps{
                 script{
-                    sh 'helm repo update ${params.updaterepo}'
-                    sh 'helm install release bitnami/jenkins'
+                    sh "helm repo update ${params.updaterepo}"
+                    sh "helm install release ${params.updaterepo}/${params.chartname}"
                 }
             }
         }
@@ -32,7 +32,7 @@ pipeline{
             when { expression {params.action == 'destroy'}}
             steps{
                 script{
-                    sh 'helm uninstall '${params.releasename}''
+                    sh "helm uninstall ${params.releasename}"
                 }
             }
         }
