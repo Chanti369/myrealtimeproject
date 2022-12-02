@@ -32,7 +32,7 @@ pipeline{
             when { expression {params.action == 'destroy'}}
             steps{
                 script{
-                    sh 'helm uninstall ${params.releasename}'
+                    sh 'helm uninstall '${params.releasename}''
                 }
             }
         }
