@@ -24,7 +24,7 @@ pipeline{
             steps{
                 script{
                     sh 'helm repo update '${params.updaterepo}''
-                    sh 'helm install '${params.releasename}' bitnami/jenkins'
+                    sh 'helm install release bitnami/jenkins'
                 }
             }
         }
