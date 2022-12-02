@@ -24,7 +24,7 @@ pipeline{
             steps{
                 script{
                     sh "helm repo update ${params.updaterepo}"
-                    sh "helm install release ${params.updaterepo}/${params.chartname}"
+                    sh "helm install ${params.releasename} ${params.updaterepo}/${params.chartname}"
                 }
             }
         }
