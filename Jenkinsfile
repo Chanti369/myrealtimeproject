@@ -23,8 +23,8 @@ pipeline{
             when { expression {params.action == 'create'}}
             steps{
                 script{
-                    sh 'helm repo update ${params.updaterepo}'
-                    sh 'helm install ${params.releasename} ${params.updaterepo}/${params.chartname}'
+                    sh 'helm repo update '${params.updaterepo}''
+                    sh 'helm install '${params.releasename}' '${params.updaterepo}'/'${params.chartname}''
                 }
             }
         }
