@@ -23,7 +23,7 @@ pipeline{
                     }
                     catch(err){
                         apply = false
-                        CurrentBuild.result='UNSTABLE'
+                        CurrentBuild.result= 'UNSTABLE'
                     }
                     if(apply){
                        sh "helm repo update ${reponame}"
@@ -43,7 +43,7 @@ pipeline{
                     }
                     catch(err){
                         apply = false
-                        CurrentBuild.result="UNSTABLE"
+                        CurrentBuild.result= "UNSTABLE"
                     }
                     if(apply){
                        sh "helm uninstall ${releasename}"
