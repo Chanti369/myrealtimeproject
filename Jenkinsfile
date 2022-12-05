@@ -66,8 +66,19 @@ pipeline{
                     withCredentials([usernamePassword(credentialsId: 'docker', passwordVariable: 'dockerpassword', usernameVariable: 'dockerusername')]) {
                         sh 'docker login -u $dockerusername -p $dockerpassword'
                         sh 'docker build -t $JOB_NAME:v1.$BUILD_ID .'
-                        sh 'docker tag $JOB_NAME:v1.$BUILD_ID ${dockerusername}/$JOB_NAME:v1.$BUILD_ID'
-                        sh 'docker tag $JOB_NAME:v1.$BUILD_ID ${dockerusername}/$JOB_NAME:latest'
+                        sh 'docker tag $JOB_NAME:v1.$BUILD_ID $dockerusername/$JOB_NAME:v1.$BUILD_ID'
+                        sh 'docker tag $JOB_NAME:v1.$BUILD_ID $dockerusername/$JOB_NAME:latest'
+                    }
+                }
+            }
+        }
+        stage('docker push'){
+            steps{
+                script{
+                    withCredentials([usernamePassword(credentialsId: 'docker', passwordVariable: 'dockerpassword', usernameVariable: 'dockerusername')]) {
+                        sh 'docker login -u $dockerusername -p $dockerpassword'
+                        sh 'docker push $dockerusername/$JOB_NAME:v1.$BUILD_ID'
+                        sh 'docker push $dockerusername/$JOB_NAME:latest'
                     }
                 }
             }
