@@ -4,6 +4,9 @@ pipeline{
             label 'awsec2instance'
         }
     }
+    tools{
+        maven 'MAVEN'
+    }
     stages{
         stage('Git checkout'){
             steps{
