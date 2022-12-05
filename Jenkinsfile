@@ -83,6 +83,17 @@ pipeline{
                 }
             }
         }
+        stage('indentifying misconfigs using datree'){
+            steps{
+                script{
+                    dir('kubernetes/myapp'){
+                        withEnv(['DATREE_TOKEN=<your-account-token>']) {
+                            sh 'datree test *.yaml --only-k8s-files'
+                        }
+                    }
+                }
+            }
+        }
     }
     post {
 		always {
