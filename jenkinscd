@@ -16,8 +16,19 @@ pipeline{
             when { expression { params.action == 'create'}}
             steps{
                 script{
-                    sh "helm repo update ${reponame}"
-                    sh "helm install ${releasename} ${reponame}/${chartname}"
+                    def apply = false
+                    try{
+                        input message: 'please confirm to apply the chart the on the cluster', ok: 'ready to apply'
+                        apply = true
+                    }
+                    catch(err){
+                        apply = false
+                        CurrentBuild.result='UNSTABLE'
+                    }
+                    if(apply){
+                       sh "helm repo update ${reponame}"
+                       sh "helm install ${releasename} ${reponame}/${chartname}"
+                    }   
                 }
             }
         }
