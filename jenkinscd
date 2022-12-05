@@ -36,7 +36,18 @@ pipeline{
             when { expression { params.action == 'destroy'}}
             steps{
                 script{
-                    sh "helm uninstall ${releasename}"
+                    def apply = false
+                    try{
+                        input message: 'are you sure do you want to uninstall the chart?', ok: 'confirm to delete'
+                        apply = true
+                    }
+                    catch(err){
+                        apply = false
+                        CurrentBuild.result="UNSTABLE"
+                    }
+                    if(apply){
+                       sh "helm uninstall ${releasename}"
+                    }   
                 }
             }
         }
