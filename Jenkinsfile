@@ -10,6 +10,13 @@ pipeline{
                 git branch: 'main', url: 'https://github.com/Chanti369/myrealtimeproject.git'
             }
         }
+        stage('unit testing'){
+            steps{
+                script{
+                    sh 'mvn clean test'
+                }
+            }
+        }
     }
     post {
 		always {
