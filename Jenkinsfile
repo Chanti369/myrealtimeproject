@@ -34,6 +34,15 @@ pipeline{
                 }
             }
         }
+        stage('static code analysis'){
+            steps{
+                script{
+                    withSonarQubeEnv(credentialsId: 'sonarqube') {
+                        sh 'mvn clean install sonar:sonar'
+                    }
+                }
+            }
+        }
     }
     post {
 		always {
