@@ -1,0 +1,33 @@
+pipeline{
+    parameters{
+        choice(name: 'action', choices: 'create\ndestroy', description: 'this will create or destroy the helm chart')
+        string(name: 'clustername', defaultValue: 'devcluster', description: 'here you can choose the cluster name')
+        string(name: 'chartname', defaultValue: 'jenkins', description: 'here you can choose the chart name')
+        string(name: 'reponame', defaultValue: 'bitnami', description: 'here you can choose thr repo name')
+        string(name: 'releasename', defaultValue: 'release1', description: 'here you can specify the release name')
+    }
+    agent{
+        node{
+            label "${clustername}"
+        }
+    }
+    stages{
+        stage('helm install'){
+            when { expression { params.action == 'create'}}
+            steps{
+                script{
+                    sh "helm repo update ${reponame}"
+                    sh "helm install ${releasename} ${reponame}/${chartname}"
+                }
+            }
+        }
+        stage('helm uninstall'){
+            when { expression { params.action == 'destroy'}}
+            steps{
+                script{
+                    sh "helm uninstall ${releasename}"
+                }
+            }
+        }
+    }
+}
