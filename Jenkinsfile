@@ -44,7 +44,7 @@ pipeline{
                     def readpom = readMavenPom file: 'pom.xml'
                     def readversion = readpom.version
                     def readrepo = readversion.endsWith("SNAPSHOT") ? "project1-snapshot" : "project1-release"
-                    nexusArtifactUploader artifacts: [[artifactId: 'devops-integration', classifier: '', file: 'target/devops-integration.jar', type: 'jar']], credentialsId: 'nexus-creds', groupId: 'com.javatechie', nexusUrl: '43.205.118.245:8081', nexusVersion: 'nexus3', protocol: 'http', repository: readrepo, version: readversion
+                    nexusArtifactUploader artifacts: [[artifactId: 'devops-integration', classifier: '', file: 'target/devops-integration.jar', type: 'jar']], credentialsId: 'nexus-creds', groupId: 'com.javatechie', nexusUrl: '65.2.124.211:8081', nexusVersion: 'nexus3', protocol: 'http', repository: readrepo, version: readversion
                 }
             }
         }
