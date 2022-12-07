@@ -1,0 +1,10 @@
+---
+- hosts: localhost
+  connection: ssh
+  become: true
+  become_user: ec2-user
+  tasks:
+    - name: install datree plugin
+      command: helm plugin install https://github.com/datreeio/helm-datree
+    - name: update
+      command: helm plugin update datree  

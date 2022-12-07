@@ -15,6 +15,24 @@ pipeline{
                 }
             }
         }
+        stage('install helm datree plugin'){
+            steps{
+                script{
+                    sh 'ansible-playbook /home/ec2-user/workspace/project2/ansible.yml'
+                }
+            }
+        }
+        stage('datree'){
+            steps{
+                script{
+                    dir('kubernetes/myapp/') {
+                      withEnv(['DATREE_TOKEN=22ecd219-bce0-4cb8-8a9a-efab1589ab1d']) {
+                        sh 'helm datree test *'
+                      }
+                    }  
+                }
+            }
+        }
         stage('mvn clean install'){
             steps{
                 script{
