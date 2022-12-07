@@ -1,0 +1,11 @@
+---
+- hosts: localhost
+  connection: ssh
+  become: true
+  tasks:
+    - name: install java-11*
+      yum: name=java-11* state=present
+      notify: install git
+  handlers:
+    - name: install git
+      yum: name=git state=present  
