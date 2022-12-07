@@ -93,7 +93,7 @@ pipeline{
                         withCredentials([usernamePassword(credentialsId: 'nexus-credentials', passwordVariable: 'nexuspassword', usernameVariable: 'nexususername')]) {
                             sh '''
                             helmversion=$(helm show chart myapp | grep version | cut -d ":" -f 2 | tr -d " ")
-                            tar -xvf myapp-${helmversion}.tgz myapp/
+                            tar -cvf myapp-${helmversion}.tgz myapp/
                             curl -u $nexususername:$nexuspassword http://65.2.124.211:8081/repository/helmrepo/ --upload-file myapp-${helmversion}.tgz -v
                             '''
                         }    
