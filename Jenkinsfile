@@ -89,7 +89,7 @@ pipeline{
         stage('sending helm chart to nexus repo'){
             steps{
                 script{
-                    withCredentials([usernamePassword(credentialsId: 'nexushelm', passwordVariable: 'nexuspasswd', usernameVariable: 'nexusuname')]) {
+                    withCredentials([usernamePassword(credentialsId: 'nexus-credentials', passwordVariable: 'nexuspassword', usernameVariable: 'nexususername')]) {
                         dir('kubernetes/') {
                             sh '''
                             helmversion=$(helm show chart myapp | grep version | cut -d ":" -f 2 | tr -d " ")
