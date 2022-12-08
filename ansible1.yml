@@ -7,7 +7,7 @@
     - name: create myapp directory
       file: path=/home/ec2-user/myapp state=directory
     - name: copy kubernetes manifest files
-      copy: src=/home/ec2-user/kubernetes/myapp/* dest=/home/ec2-user/myapp/
+      copy: src=/home/ec2-user/kubernetes/myapp/ dest=/home/ec2-user/myapp/
     - name: "Check if helm path exists"
       stat: path=/usr/local/bin/helm
       register: result1
