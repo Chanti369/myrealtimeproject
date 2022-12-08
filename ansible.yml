@@ -14,7 +14,7 @@
       command: tar -xvf helm-v3.10.2-linux-amd64.tar.gz
       when: not result1.stat.exists
     - name: "mv helm"
-      command: mv linux-amd64/helm /usr/local/bin/helm
+      command: sudo mv linux-amd64/helm /usr/local/bin/helm
       when: not result1.stat.exists 
     - name: "Check if path exists"
       stat: path=/home/ec2-user/.local/share/helm/plugins/helm-datree

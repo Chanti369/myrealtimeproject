@@ -1,1 +1,40 @@
-pipeline{}
+pipeline{
+    parameters{
+        choice(name: 'action', choices: 'create\ndestroy', description: 'this is used to create or destroy')
+        string(name: 'chartname', defaultValue: 'jenkins', description: 'you can describe the chart name')
+        string(name: 'reponame', defaultValue: 'bitnami', description: 'here you can define the repo')
+        string(name: 'releasename', defaultValue: 'myrelease', description: 'here you can describe the release name')
+        string(name: 'clustername', defaultValue: 'devcluster', description: 'here you can define the cluster name')
+    }
+    agent{
+        node{
+            label "${params.clustername}"
+        }
+    }
+    stages{
+        stage('git checkout'){
+            steps{
+                script{
+                    git branch: 'main', url: 'https://github.com/Chanti369/myrealtimeproject.git'
+                }
+            }
+        }
+        stage('installing helm chart into the cluster'){
+            when { expression { params.action == "create"}}
+            steps{
+                script{
+                    sh "helm repo update ${params.reponame}"
+                    sh "helm install ${params.releasename} ${params.reponame}/${params.chartname}"
+                }
+            }
+        }
+        stage('uninstalling chart from cluster'){
+            when { expression { params.action == "destroy"}}
+            steps{
+                script{
+                    sh "helm uninstall ${params.releasename}"
+                }
+            }
+        }
+    }
+}
