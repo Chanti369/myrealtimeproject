@@ -95,5 +95,20 @@ pipeline{
                 }
             }
         }
+        stage('nexus helm chart uploader'){
+            steps{
+                script{
+                    dir('kubernetes/') {
+                        withCredentials([usernamePassword(credentialsId: 'nexushelm', passwordVariable: 'npassword', usernameVariable: 'nusername')]) {
+                            sh '''
+                            helmversion=$(helm show chart myapp | grep version | cut -d ":" -f 2 | tr -d " ")
+                            tar -czvf myapp-${helmversion}.tgz myapp/
+                            curl -u $nusername:$npassword http://13.126.234.16:8081/repository/helm-repo/ --upload-file myapp-${helmversion}.tgz -v
+                            '''
+                        }
+                    }
+                }
+            }
+        }
     }
 }
