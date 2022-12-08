@@ -13,7 +13,7 @@ pipeline{
                 script{
                     sshagent(['ec2instancekeypair']) {
                         sh 'ssh -o StrictHostKeyChecking=no ec2-user@172.31.42.162'
-                        sh 'scp /var/lib/jenkins/workspace/ansibleproject/* ec2-user@172.31.42.162:/home/ec2-user'
+                        sh 'scp -r /var/lib/jenkins/workspace/ansibleproject/* ec2-user@172.31.42.162:/home/ec2-user'
                     }
                 }
             }
