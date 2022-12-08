@@ -1,0 +1,29 @@
+pipeline{
+    agent any
+    stages{
+        stage('git checkout'){
+            steps{
+                script{
+                   git branch: 'main', url: 'https://github.com/Chanti369/myrealtimeproject.git'
+                }   
+            }
+        }
+        stage('making ssh connection and transferring files'){
+            steps{
+                script{
+                    sshagent(['ec2instancekeypair']) {
+                        sh 'ssh -o StrictHostKeyChecking=no ec2-user@172.31.42.162'
+                        sh 'scp /var/lib/jenkins/workspace/ansibleproject/* ec2-user@172.31.42.162:/home/ec2-user'
+                    }
+                }
+            }
+        }
+        stage('executing playbook'){
+            steps{
+                script{
+                    sh 'ssh -o StrictHostKeyChecking=no ec2-user@172.31.42.162 ansible-playbook /home/ec2-user/ansible1.yml'
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,24 @@
+---
+- hosts: demo
+  connection: ssh
+  become_user: ec2-user
+  become: true
+  tasks:
+    - name: create myapp directory
+      file: path=/home/ec2-user/myapp state=directory
+    - name: copy kubernetes manifest files
+      copy: src=/home/ec2-user/kubernetes/myapp/* dest=/home/ec2-user/myapp/
+    - name: "Check if helm path exists"
+      stat: path=/usr/local/bin/helm
+      register: result1
+    - name: "install helm"
+      command: wget https://get.helm.sh/helm-v3.10.2-linux-amd64.tar.gz
+      when: not result1.stat.exists
+    - name: "untar helm"
+      command: tar -xvf helm-v3.10.2-linux-amd64.tar.gz
+      when: not result1.stat.exists
+    - name: "mv helm"
+      command: sudo mv linux-amd64/helm /usr/local/bin/helm
+      when: not result1.stat.exists 
+    - name: installing myapp chart
+      command: helm install myrelease /home/ec2-user/myapp  
