@@ -21,7 +21,7 @@ pipeline{
         stage('executing playbook'){
             steps{
                 script{
-                    sh 'ssh -o StrictHostKeyChecking=no ec2-user@172.31.42.162 ansible-playbook /home/ec2-user/ansible1.yml'
+                    sh 'ssh -o StrictHostKeyChecking=no ec2-user@172.31.42.162 sudo ansible-playbook /home/ec2-user/ansible1.yml'
                 }
             }
         }
