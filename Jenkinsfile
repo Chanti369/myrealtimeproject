@@ -70,7 +70,28 @@ pipeline{
                         sh 'docker push $dusername/$JOB_NAME:latest'
                         sh 'docker rmi -f $dusername/$JOB_NAME:latest'
                         sh 'docker rmi -f $dusername/$JOB_NAME:v1.$BUILD_ID'
+                        sh 'docker rmi -f $JOB_NAME:v1.$BUILD_ID'
                     }
+                }
+            }
+        }
+        stage('installing helm datree'){
+            steps{
+                script{
+                    sh 'ansible-playbook ansible.yml'
+                }
+            }
+        }
+        stage('misconfigs using datree'){
+            steps{
+                script{
+                    dir('kubernetes/') {
+                       withEnv(['DATREE_TOKEN=22ecd219-bce0-4cb8-8a9a-efab1589ab1d']){
+                           sh 'helm datree test myapp/'
+                       }
+                        
+
+                    } 
                 }
             }
         }
