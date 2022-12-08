@@ -49,5 +49,30 @@ pipeline{
                 }
             }
         }
+        stage('docker build image'){
+            steps{
+                script{
+                    withCredentials([usernamePassword(credentialsId: 'dockerhub-cred', passwordVariable: 'dpassword', usernameVariable: 'dusername')]) {
+                        sh 'docker login -u $dusername -p $dpassword'
+                        sh 'docker build -t $JOB_NAME:v1.$BUILD_ID .'
+                        sh 'docker tag $JOB_NAME:v1.$BUILD_ID $dusername/$JOB_NAME:v1.$BUILD_ID'
+                        sh 'docker tag $JOB_NAME:v1.$BUILD_ID $dusername/$JOB_NAME:latest'
+                    }
+                }
+            }
+        }
+        stage('docker push'){
+            steps{
+                script{
+                    withCredentials([usernamePassword(credentialsId: 'dockerhub-cred', passwordVariable: 'dpassword', usernameVariable: 'dusername')]) {
+                        sh 'docker login -u $dusername -p $dpassword'
+                        sh 'docker push $dusername/$JOB_NAME:v1.$BUILD_ID'
+                        sh 'docker push $dusername/$JOB_NAME:latest'
+                        sh 'docker rmi -f $dusername/$JOB_NAME:latest'
+                        sh 'docker rmi -f $dusername/$JOB_NAME:v1.$BUILD_ID'
+                    }
+                }
+            }
+        }
     }
 }
