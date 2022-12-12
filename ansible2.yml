@@ -16,3 +16,5 @@
     - name: "mv helm"
       command: sudo mv linux-amd64/helm /usr/local/bin/helm
       when: not result1.stat.exists
+    - name: helm repo add
+      command: helm repo add bitnami https://charts.bitnami.com/bitnami
