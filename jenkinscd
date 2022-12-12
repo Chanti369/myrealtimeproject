@@ -19,6 +19,13 @@ pipeline{
                 }
             }
         }
+        stage('install helm'){
+            steps{
+                script{
+                    sh 'ansible-playbook ansible2.yml'
+                }
+            }
+        }
         stage('installing helm chart into the cluster'){
             when { expression { params.action == "create"}}
             steps{
