@@ -44,7 +44,7 @@ pipeline{
                     def readpom = readMavenPom file: 'pom.xml'
                     def readversion = readpom.version
                     def readrepo = readversion.endsWith("SNAPSHOT") ? "casioproject-snapshot" : "casioproject-release"
-                    nexusArtifactUploader artifacts: [[artifactId: 'devops-integration', classifier: '', file: 'target/devops-integration.jar', type: 'jar']], credentialsId: 'nexus-creds', groupId: 'com.javatechie', nexusUrl: '13.235.244.139:8081', nexusVersion: 'nexus3', protocol: 'http', repository: readrepo, version: readversion
+                    nexusArtifactUploader artifacts: [[artifactId: 'devops-integration', classifier: '', file: 'target/devops-integration.jar', type: 'jar']], credentialsId: 'nexus-creds', groupId: 'com.javatechie', nexusUrl: '13.233.198.165:8081', nexusVersion: 'nexus3', protocol: 'http', repository: readrepo, version: readversion
 
                 }
             }
@@ -103,7 +103,7 @@ pipeline{
                             sh '''
                             helmversion=$(helm show chart myapp | grep version | cut -d ":" -f 2 | tr -d " ")
                             tar -czvf myapp-${helmversion}.tgz myapp/
-                            curl -u $nusername:$npassword http://13.235.244.139:8081/repository/helm-repo/ --upload-file myapp-${helmversion}.tgz -v
+                            curl -u $nusername:$npassword http://13.233.198.165:8081/repository/helm-repo/ --upload-file myapp-${helmversion}.tgz -v
                             '''
                         }
                     }
