@@ -6,6 +6,8 @@
   tasks:
     - name: copy all files
       copy: src=/home/ec2-user/deployment.yml dest=/home/ec2-user/
+    - name: copy all files
+      copy: src=/home/ec2-user/service.yml dest=/home/ec2-user/  
     - name: delete deployment.yml
       command: kubectl delete -f /home/ec2-user/deployment.yml
     - name: delete service.yml
