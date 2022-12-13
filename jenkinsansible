@@ -23,7 +23,7 @@ pipeline{
                 script{
                     sshagent(['ec2instancekeypair']) {
                        sh 'ssh -o StrictHostKeyChecking=no ec2-user@172.31.32.40'
-                       sh 'ssh -o StrictHostKeyChecking=no ec2-user@172.31.32.40 sudo ansible-playbook /home/ec2-user/ansible3.yml'
+                       sh 'ssh -o StrictHostKeyChecking=no ec2-user@172.31.32.40 ansible-playbook /home/ec2-user/ansible3.yml'
                     }   
                 }
             }
