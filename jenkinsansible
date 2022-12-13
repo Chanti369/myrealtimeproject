@@ -12,8 +12,8 @@ pipeline{
             steps{
                 script{
                     sshagent(['ec2instancekeypair']) {
-                        sh 'ssh -o StrictHostKeyChecking=no ec2-user@172.31.42.162'
-                        sh 'scp -r /var/lib/jenkins/workspace/ansibleproject/* ec2-user@172.31.42.162:/home/ec2-user'
+                        sh 'ssh -o StrictHostKeyChecking=no ec2-user@172.31.32.40'
+                        sh 'scp -r /var/lib/jenkins/workspace/my-project/* ec2-user@172.31.32.40:/home/ec2-user'
                     }
                 }
             }
@@ -22,8 +22,8 @@ pipeline{
             steps{
                 script{
                     sshagent(['ec2instancekeypair']) {
-                       sh 'ssh -o StrictHostKeyChecking=no ec2-user@172.31.42.162'
-                       sh 'ssh -o StrictHostKeyChecking=no ec2-user@172.31.42.162 sudo ansible-playbook /home/ec2-user/ansible1.yml'
+                       sh 'ssh -o StrictHostKeyChecking=no ec2-user@172.31.32.40'
+                       sh 'ssh -o StrictHostKeyChecking=no ec2-user@172.31.32.40 sudo ansible-playbook /home/ec2-user/ansible3.yml'
                     }   
                 }
             }
