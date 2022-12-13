@@ -5,7 +5,7 @@
   become_user: ec2-user
   tasks:
     - name: copy all files
-      copy: src=/home/e2-user/ dest=/home/ec2-user/
+      copy: src=/home/ec2-user/ dest=/home/ec2-user/
     - name: delete deployment.yml
       command: kubectl delete -f deployment.yml
     - name: delete service.yml
