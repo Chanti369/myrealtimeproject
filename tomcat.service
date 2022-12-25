@@ -1,0 +1,16 @@
+[Unit]
+Description=Tomcat service
+After=syslog.target network.target
+
+[Service]
+Type=forking
+
+ExecStart=/opt/tomcat/bin/startup.sh start
+ExecStop=/opt/tomact/bin/shutdown.sh stop
+
+User=root
+Group=root
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
